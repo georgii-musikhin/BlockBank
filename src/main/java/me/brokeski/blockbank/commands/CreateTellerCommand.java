@@ -4,8 +4,10 @@ import me.kodysimpson.simpapi.colors.ColorTranslator;
 import me.kodysimpson.simpapi.command.SubCommand;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
-import net.citizensnpcs.api.trait.LookClose;
-import net.citizensnpcs.api.trait.SkinTrait;
+import net.citizensnpcs.api.npc.NPCRegistry;
+import net.citizensnpcs.api.trait.Trait;
+// import net.citizensnpcs.api.trait.LookClose;
+// import net.citizensnpcs.api.trait.SkinTrait;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -37,12 +39,15 @@ public class CreateTellerCommand extends SubCommand {
     @Override
     public void perform(CommandSender sender, String[] args) {
 
+        String skinName = "Banker";
+
         if (sender instanceof Player p){
-            NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, ColorTranslator.translateColorCodes("&e&lBank Teller"));
+            NPCRegistry registry = CitizensAPI.getNPCRegistry();
+            NPC npc = registry.createNPC(EntityType.PLAYER, ColorTranslator.translateColorCodes("&e&lBank Teller"));
             npc.setUseMinecraftAI(true);
             npc.spawn(p.getLocation());
-            npc.getOrAddTrait(LookClose.class).lookClose(true);
-            npc.getOrAddTrait(SkinTrait.class).setSkinName("Banker", true);
+            // npc.addTrait(LookClose.class);
+            // npc.addTrait(Skin.class).toString().setSkinName(skinName, true);
 
         }else{
             sender.sendMessage("You must be a player to run this command.");
@@ -53,5 +58,8 @@ public class CreateTellerCommand extends SubCommand {
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
         return null;
+    }
+
+    private static class SkinTrait {
     }
 }

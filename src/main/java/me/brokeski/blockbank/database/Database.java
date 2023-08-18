@@ -12,9 +12,12 @@ import me.brokeski.blockbank.utils.Serializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.sql.*;
 import java.util.UUID;
+
+import static org.h2.util.JdbcUtils.getConnection;
 
 public class Database {
 
@@ -120,7 +123,7 @@ public class Database {
 
     public static void addATM(ATM atm) {
 
-        String uuid = atm.getOwner().getUniqueId().toString();
+        String uuid = atm.getOwner().toString();
         Location location = atm.getLocation();
 
         try {
@@ -133,6 +136,10 @@ public class Database {
             throwables.printStackTrace();
         }
 
+    }
+
+    private static Connection getConnection() {
+        return null;
     }
 
     public static boolean isATMLocation(Location location) {
@@ -178,7 +185,7 @@ public class Database {
             result.next();
 
             Player player = Bukkit.getPlayer(UUID.fromString(result.getString(1)));
-            return new ATM(player, location);
+            return new ATM((ItemStack) player, location);
 
 
         } catch (SQLException throwables) {
