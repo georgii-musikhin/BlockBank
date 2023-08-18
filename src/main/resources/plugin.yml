@@ -1,0 +1,13 @@
+name: BlockBank
+version: '${project.version}'
+main: me.brokeski.blockbank.BlockBank
+api-version: 1.20
+depend:
+  - Vault
+  - Citizens
+authors: [ F3_TheGreat ]
+description: A bank plugin where you can supply all of your coins/cash in!
+website: https://github.com/ZackLackinJava/
+commands:
+  createteller:
+    description: create the teller npc, dev command
