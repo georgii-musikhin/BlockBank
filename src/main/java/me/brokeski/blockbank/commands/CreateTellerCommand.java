@@ -5,9 +5,8 @@ import me.kodysimpson.simpapi.command.SubCommand;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
-import net.citizensnpcs.api.trait.Trait;
-// import net.citizensnpcs.api.trait.LookClose;
-// import net.citizensnpcs.api.trait.SkinTrait;
+import net.citizensnpcs.trait.LookClose;
+import net.citizensnpcs.trait.SkinTrait;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -46,20 +45,24 @@ public class CreateTellerCommand extends SubCommand {
             NPC npc = registry.createNPC(EntityType.PLAYER, ColorTranslator.translateColorCodes("&e&lBank Teller"));
             npc.setUseMinecraftAI(true);
             npc.spawn(p.getLocation());
-            // npc.addTrait(LookClose.class);
-            // npc.addTrait(Skin.class).toString().setSkinName(skinName, true);
+            npc.addTrait(LookClose.class);
+            SkinTrait skinTrait = createSkinTrait(skinName);
+            npc.addTrait(skinTrait);
 
         }else{
             sender.sendMessage("You must be a player to run this command.");
         }
 
     }
-
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
         return null;
     }
 
-    private static class SkinTrait {
+
+    private SkinTrait createSkinTrait(String skinName) {
+        SkinTrait skinTrait = new SkinTrait();
+        skinTrait.setSkinName(skinName, true);
+        return skinTrait;
     }
 }
